@@ -1,0 +1,152 @@
+services:
+  reubah:
+    image: ghcr.io/dendianugerah/reubah:latest
+    container_name: reubah
+    restart: always
+    environment:
+      - PORT=23339
+    ports:
+      - "23339:23339"
+    volumes:
+      - /database/reubah/doc-temp:/tmp
+
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:latest
+    container_name: mealie
+    restart: unless-stopped
+    mem_limit: 512M
+    environment:
+      - ALLOW_SIGNUP=true
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Shanghai
+      - MAX_WORKERS=5
+      - WEB_CONCURRENCY=1
+      - BASE_URL=http://192.168.50.50:23340
+    ports:
+      - "23340:9000"
+    volumes:
+      - /database/mealie/data/:/app/data/
+
+  wiznote:
+    image: wiznote/wizserver:latest
+    container_name: wiznote
+    restart: always
+    ports:
+      - "23341:80"
+      - "23327:9269/udp"
+    volumes:
+      - /database/wiznote:/wiz/storage
+      - /etc/localtime:/etc/localtime
+    stdin_open: true
+    tty: true
+
+  homeassistant:
+    image: homeassistant/home-assistant:latest
+    container_name: ha
+    restart: always
+    ports:
+      - "23342:8123"
+    volumes:
+      - /database/homeassistant/config:/config
+
+  calibre:
+    image: linuxserver/calibre-web:latest
+    container_name: calibre
+    restart: always
+    environment:
+      - USE_CONFIG_DIR=true
+      - SET_CONTAINER_TIMEZONE=true
+      - CONTAINER_TIMEZONE=Asia/Shanghai
+      - PGID=0
+      - PUID=0
+    ports:
+      - "23343:8083"
+    volumes:
+      - /database/calibre/books:/books
+      - /database/calibre/config:/calibre-web/config
+
+  v2raya:
+    image: mzz2017/v2raya:latest
+    container_name: v2raya
+    restart: always
+    privileged: true
+    network_mode: host
+    environment:
+      - V2RAYA_ADDRESS=0.0.0.0:23344
+      - PUID=0
+      - GUID=0
+      - V2RAYA_LOG_FILE=/tmp/v2raya.log
+      - V2RAYA_V2RAY_BIN=/usr/local/bin/v2ray
+      - V2RAYA_NFTABLES_SUPPORT=off
+      - IPTABLES_MODE=legacy
+    volumes:
+      - /lib/modules:/lib/modules:ro
+      - /etc/resolv.conf:/etc/resolv.conf
+      - /database/v2raya:/etc/v2raya
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    restart: always
+    ports:
+      - "23345:3001"
+    volumes:
+      - /database/uptime-kuma:/app/data
+
+  netalertx:
+    image: ghcr.io/jokob-sk/netalertx:latest
+    container_name: netalertx
+    restart: unless-stopped
+    network_mode: host
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+      - NET_BIND_SERVICE
+      - CHOWN
+      - SETUID
+      - SETGID
+    volumes:
+      - /database/netalertx/data:/data
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - PORT=23346
+    tmpfs:
+      - /tmp:uid=20211,gid=20211,mode=1700,rw,noexec,nosuid,nodev,async,noatime,nodiratime
+
+  dockports:
+    image: ghcr.io/coracoo/dockports:latest
+    container_name: dockports
+    restart: always
+    network_mode: host
+    environment:
+      - DOCKPORTS_PORT=23347
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /database/dockports/config:/app/config
+
+  scrutiny:
+    image: ghcr.io/analogj/scrutiny:master-omnibus
+    container_name: scrutiny
+    restart: unless-stopped
+    ports:
+      - "23348:8080"
+      - "8086:8086"
+    volumes:
+      - /database/scrutiny:/opt/scrutiny/config
+      - /database/scrutiny/influxdb2:/opt/scrutiny/influxdb
+      - /run/udev:/run/udev:ro
+    cap_add:
+      - SYS_RAWIO
+      - SYS_ADMIN
+    devices:
+
+  it-tools:
+    image: corentinth/it-tools:latest
+    container_name: it-tools
+    restart: unless-stopped
+    ports:
+      - "23349:80"
+

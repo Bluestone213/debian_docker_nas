@@ -1,0 +1,92 @@
+services:
+  flare:
+    image: soulteary/flare
+    container_name: flare
+    restart: always
+    volumes:
+      - /database/flare:/app
+    ports:
+      - "80:5005"
+
+  filebrowser:
+    image: filebrowser/filebrowser:latest
+    container_name: filebrowser
+    restart: always
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /database/filebrowser:/config
+    ports:
+      - "23333:80"
+
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    restart: always
+    volumes:
+      - /database/jellyfin/config:/config
+      - /database/jellyfin/cache:/cache
+    ports:
+      - "23334:8096"
+
+  syncthing:
+    image: linuxserver/syncthing
+    container_name: syncthing
+    restart: always
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Shanghai
+    volumes:
+      - /database/syncthing/config:/config
+    ports:
+      - "23335:8384"
+      - "23331:22000/tcp"
+      - "23331:22000/udp"
+      - "23330:21027/udp"
+
+  qbittorrent:
+    image: linuxserver/qbittorrent
+    container_name: qbittorrent
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Shanghai
+      - WEBUI_PORT=23336
+    volumes:
+      - /database/qbittorrent/config:/config
+
+  stirling-pdf:
+    image: frooodle/s-pdf
+    container_name: spdf
+    restart: always
+    volumes:
+      - /database/spdf/configs:/configs
+    ports:
+      - "23337:8080"
+
+  aria2:
+    image: superng6/aria2
+    container_name: aria2
+    restart: always
+    environment:
+      - PUID=1000
+      - GUID=1000
+      - SECRET=wedontknow
+      - CACHE=2048M
+      - PORT=23328
+      - BTPORT=23329
+      - WEBUI=true
+      - WEBUI_PORT=23338
+      - FA=falloc
+    volumes:
+      - /database/aria2/config:/config
+    ports:
+      - "23338:23338"
+      - "23328:23328"
+      - "23329:23329"
+      - "23329:23329/udp"
+

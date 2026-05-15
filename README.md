@@ -1,7 +1,7 @@
-# debian_docker_nas
-A shell script suite to configure Debian-based NAS by using Docker (for China)
-本仓库代码由 DeepSeek AI 生成，作者不主张著作权。
-代码仅供学习交流使用，禁止用于任何商业用途。
+    # debian_docker_nas
+    A shell script suite to configure Debian-based NAS by using Docker (for China)    
+    本仓库代码由 DeepSeek AI 生成，作者不主张著作权。
+    代码仅供学习交流使用，禁止用于任何商业用途。
 
     本脚本的用途是在一个全新安装的debian上通过导入标准化的json文件快速生成一个基于Docker实现的多功能的NAS/Homeserver
     
@@ -49,7 +49,8 @@ A shell script suite to configure Debian-based NAS by using Docker (for China)
             /dev/sdc1    /mnt/data                #数据盘目录，依实际大小确定
             ####以上为数据盘####
         2.（建议）安装好ssh、开放22端口并允许root登录，如果从本机登录并配置，可忽略。
-        3.（可选）确保apt时有可用的软件源，因为如果要使用脚本进行分区操作，需要安装parted，也可以不管，先进行基础配置再分区就行
+     ~~ 3.（可选）确保apt时有可用的软件源，因为如果要使用脚本进行分区操作，需要安装parted，也可以不管，先进行基础配置再分区就行~~
+        已改为fdisk,不需要了。       
         4.确保以root身份登录，并
         
         5.获取并运行脚本

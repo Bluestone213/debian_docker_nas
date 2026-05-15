@@ -43,9 +43,11 @@
     
     使用方法
     1.获取并运行脚本
-    >wget https://github.com/Bluestone213/debian_docker_nas/releases/download/0.2/debian_docker_nas_v0.2.tar.gz-O && tar debian_docker_nas*.tar.gz
-    >>cd debian_docker_nas* 
-    >>bash main.sh
+    ```
+    wget https://github.com/Bluestone213/debian_docker_nas/releases/download/0.2/debian_docker_nas.tar.gz-O && tar debian_docker_nas.tar.gz
+    cd debian_docker_nas
+    bash main.sh
+    ```
     2.待续
 
     

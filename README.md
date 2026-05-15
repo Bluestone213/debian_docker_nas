@@ -44,20 +44,10 @@
     使用方法
     1.获取并运行脚本
     >wget https://github.com/Bluestone213/debian_docker_nas/releases/download/0.2/debian_docker_nas_v0.2.tar.gz-O && tar debian_docker_nas*.tar.gz
-    >cd debian_docker_nas* 
-    >bash main.sh
+    >>cd debian_docker_nas* 
+    >>bash main.sh
     2.待续
 
     
     
-    主菜单
-    
-<img width="618" height="625" alt="image" src="https://github.com/user-attachments/assets/4cad8b4c-1a51-4271-9a15-d80aed9f891e" />
-
-    基础配置
-
-<img width="397" height="248" alt="image" src="https://github.com/user-attachments/assets/3530855d-8366-437c-b1e8-c53ed5de970d" />
-
-    部署容器
-<img width="484" height="217" alt="image" src="https://github.com/user-attachments/assets/c03858e6-07fa-4538-8125-7e87305cb208" />
-
+ 
